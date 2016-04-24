@@ -35,7 +35,43 @@ struct node{
 	struct node *left;
 	struct node *right;
 };
-
+void traverse_bst2(struct node *, struct node*);
+void insert_node_in_bst1(struct node *, struct node *);
 void merge_two_bst(struct node *root1, struct node *root2){
+	traverse_bst2(root1, root2);
+}
+void traverse_bst2(struct node *root1, struct node*root2){
+	if (root2 == NULL)
+		return;
+	traverse_bst2(root1,root2->left);
+	traverse_bst2(root1, root2->right);
+	insert_node_in_bst1(root1, root2);
+}
+
+void insert_node_in_bst1(struct node *root1, struct node *temp){
+	struct node *prev;
+	prev=root1;
+	//finding node in bst1 where node from bst2 is to be inserted
+	while (root1 != NULL){
+		prev = root1;
+		if (temp->data <= root1->data){
+			root1 = root1->left;
+		}
+		else if (temp->data > root1->data){
+			root1 = root1->right;
+		}
+	}
+
+	//adding node to bst1
+	if (temp->data <=prev->data){
+		prev->left = temp;
+		temp->right = NULL;
+		temp->left = NULL;
+	}
+	else if (temp->data > prev->data){
+		prev->right = temp;
+		temp->right = NULL;
+		temp->left = NULL;
+	}
 	
 }
